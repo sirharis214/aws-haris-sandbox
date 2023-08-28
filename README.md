@@ -17,4 +17,10 @@ AWS IAM Identity Center uses a centralized aws management account to securely cr
 
 Using the provided URL, https://d-906780a037.awsapps.com/start Once the user's reset their passwords and auth into AWS, they get prompted with a list of AWS accounts they have access to. Upon selecting an AWS account, they get a list of roles they can assume based on groups they are assigned under. 
 
-For an indept tutorial on how to create AWS IAM Identity Center resources, please checkout out [iam_identity_center.md](docs/iam_identity_center.md)
+## IAM Identity Center Setup
+
+For an indept tutorial on how to create AWS IAM Identity Center resources, see [iam_identity_center.md](docs/iam_identity_center.md)
+
+## AWS CLI Auth
+
+To authenticate aws cli for AWS IAM Identity Center user's (aws command liine or terraform use), see [aws_config_sso.md](docs/aws_config_sso.md)
