@@ -1,0 +1,25 @@
+# python cache
+__pycache__
+.pytest_cache
+
+#artifacts
+tmp
+.serverless
+venv
+.terraform/
+dummy.tf
+vars.tfvars
+*.tfstate*
+.coverage
+.vscode/
+terraform.tfvars
+.terraform
+.terraform.lock.hcl
+
+#modules
+node_modules
+package-lock.json
+
+#workspace
+*.code-workspace
+.DS_Store
