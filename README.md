@@ -23,4 +23,78 @@ For an indept tutorial on how to create AWS IAM Identity Center resources, see [
 
 ## AWS CLI Auth
 
-To authenticate aws cli for AWS IAM Identity Center user's (aws command liine or terraform use), see [aws_config_sso.md](docs/aws_config_sso.md)
+To authenticate aws cli for AWS IAM Identity Center user's we will be using `aws sso`. This will auth us into AWS for aws cli use and terraform use. See [aws_sso_config.md](docs/aws_sso_config.md) for configuration process.
+
+* Authenticate (configuration steps have already been followed)
+    - `aws sso login`
+    - Web browser will open to login to AWS
+    - Update `.aws/config`'s `sso_role_name` value under `[default]` with the name of the permission set
+        - name of the permission set depends on the group the user belongs to
+* Log out
+    - `aws sso logout`
+
+# IAM 
+
+We manually created IAM Identity Center groups, users, permission sets. When creating infrastructure using terraform, we will mostly auth in as a user under PowerUser group. There are some roadblocks, sometimes we will need to create IAM Roles which only user's under Admin group can do. 
+
+This would require us to:
+* run command: `aws sso login`
+    - auth in as a admin-user
+* update `.aws/config`'s `sso_role_name` to `AdministratorAccess`
+* create IAM Role in terraform (or other resources only admins can create)
+* run command: `aws sso logout`
+* run command: `aws sso login` again
+    - auth in as a power-user 
+* update `.aws/config`'s `sso_role_name` to `PowerUserAccess`
+
+Now when you try to create the remainder of the resources as a power-user, you will run into some errors. These errors are related to the permission restrictions that power-user's have, they can't `read` the state of certain resources that only admin's can read.
+
+To solve this, we must create a custom IAM policy with these `read` permissions. Then we can attach this custom policy to the IAM Identity Center's `PowerUserAccess` permission set.
+
+> The custom IAM policy permission's will be updated as needed to ensure we follow the principle of least privilege.
+
+## required permission
+```hcl
+# The SSO Instance
+data "aws_ssoadmin_instances" "sso" {}
+
+# SSO's PowerUserAccess permission set
+data "aws_ssoadmin_permission_set" "power_user_access" {
+  instance_arn = tolist(data.aws_ssoadmin_instances.sso.arns)[0]
+  name         = "PowerUserAccess"
+}
+
+# custom IAM policy
+resource "aws_iam_policy" "power_user_access" {
+  name        = "PowerUserAccess"
+  policy      = data.aws_iam_policy_document.power_user_access.json
+  description = "Additional permissions required to run terraform plan"
+
+  tags = local.tags
+}
+
+# custom IAM policy's permissions
+data "aws_iam_policy_document" "power_user_access" {
+  statement {
+    sid       = "RunTfPlan"
+    effect    = "Allow"
+    resources = ["*"]
+    actions = [
+      "iam:GetRole",
+      "iam:ListRolePolicies",
+      "iam:GetRolePolicy",
+      "iam:ListAttachedRolePolicies",
+    ]
+  }
+}
+
+# attaching custom IAM policy to SSO's PowerUserAccess permission set 
+resource "aws_ssoadmin_customer_managed_policy_attachment" "power_user_access" {
+  instance_arn       = data.aws_ssoadmin_permission_set.power_user_access.instance_arn
+  permission_set_arn = data.aws_ssoadmin_permission_set.power_user_access.arn
+  customer_managed_policy_reference {
+    name = aws_iam_policy.power_user_access.name
+  }
+}
+
+```

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "this" {
-  bucket_prefix = local.account_name
+  bucket_prefix = local.module_name
   tags          = local.tags
 }
 
