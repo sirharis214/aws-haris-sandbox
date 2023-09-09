@@ -47,6 +47,8 @@ This would require us to:
     - auth in as a power-user 
 * update `.aws/config`'s `sso_role_name` to `PowerUserAccess`
 
+> Utilize the script [aws_sso_login.sh](docs/aws_sso_login.sh) which updates the sso_role_name and opens your web browser to auth into AWS. Similarly, the script `change_sso_role_name.sh` updates the role name but does not open the web browser for you to auth into AWS. 
+
 Now when you try to create the remainder of the resources as a power-user, you will run into some errors. These errors are related to the permission restrictions that power-user's have, they can't `read` the state of certain resources that only admin's can read.
 
 To solve this, we must create a custom IAM policy with these `read` permissions. Then we can attach this custom policy to the IAM Identity Center's `PowerUserAccess` permission set.
