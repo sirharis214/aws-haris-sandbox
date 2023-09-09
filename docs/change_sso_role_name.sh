@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Similarl to aws_sso_login.sh 
+# this script updates the role name but does not open the web browser for you to auth into AWS. 
+
 config_file="$HOME/.aws/config"
 temp_file="/tmp/aws_config_temp"
 

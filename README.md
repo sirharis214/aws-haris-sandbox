@@ -30,6 +30,9 @@ To authenticate aws cli for AWS IAM Identity Center user's we will be using `aws
     - Web browser will open to login to AWS
     - Update `.aws/config`'s `sso_role_name` value under `[default]` with the name of the permission set
         - name of the permission set depends on the group the user belongs to
+
+> Utilize the script [aws_sso_login.sh](docs/aws_sso_login.sh) which updates the sso_role_name and opens your web browser to auth into AWS.
+
 * Log out
     - `aws sso logout`
 
@@ -46,8 +49,6 @@ This would require us to:
 * run command: `aws sso login` again
     - auth in as a power-user 
 * update `.aws/config`'s `sso_role_name` to `PowerUserAccess`
-
-> Utilize the script [aws_sso_login.sh](docs/aws_sso_login.sh) which updates the sso_role_name and opens your web browser to auth into AWS. Similarly, the script `change_sso_role_name.sh` updates the role name but does not open the web browser for you to auth into AWS. 
 
 Now when you try to create the remainder of the resources as a power-user, you will run into some errors. These errors are related to the permission restrictions that power-user's have, they can't `read` the state of certain resources that only admin's can read.
 
