@@ -12,4 +12,5 @@
 * custom Security Group
     - Ingress SSH from my Macbook
     - Egress Allow All
-    
+* Removing idel NAT Gateway and EIP to avoid a daily cost of $1.08
+    - also removed private route-table's route for public internet going to NAT 

@@ -36,10 +36,13 @@ resource "aws_route_table" "private" {
   }
 
   # all packets for the internet go to NAT Gateway
+  # See gateway.tf for why this route is removed.
+  /*
   route {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.main.id
   }
+  */
 
   tags = merge(local.tags, { Name = "main-private-rt" })
 }
