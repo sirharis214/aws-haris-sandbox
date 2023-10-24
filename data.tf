@@ -12,3 +12,9 @@ data "aws_ssoadmin_permission_set" "power_user_access" {
 # output "arn" {
 #   value = data.aws_ssoadmin_permission_set.power_user_access.arn
 # }
+
+data "aws_region" "this" {
+}
+
+data "aws_caller_identity" "this" {
+}
