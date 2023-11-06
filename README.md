@@ -105,7 +105,7 @@ resource "aws_ssoadmin_customer_managed_policy_attachment" "power_user_access" {
 
 # CI/CD
 
-![overview](/docs/images/aws-haris-sandbox-cicd.drawio.png)
+![overview](/docs/images/cicd/aws-haris-sandbox-cicd.drawio.png)
 
 * [Code source](#code-source)
 * [Code artifacts](#code-artifacts)
@@ -237,9 +237,9 @@ Once you create the CodeBuild project using the resource `aws_codebuild_project`
 
 Now we can use terraform to create the webhook for this CodeBuild project using the resource `aws_codebuild_webhook`.
 
-<img src="./docs/images/webhook/edit_source.png" height=70% width=80%>
-<img src="./docs/images/webhook/oauth_codebuild_to_github.png" height=70% width=40%>
-<img src="./docs/images/webhook/confirm_oauth_codebuild_to_github.png" height=30% width=70%>
+<img src="./docs/images/cicd/edit_source.png" height=70% width=80%>
+<img src="./docs/images/cicd/oauth_codebuild_to_github.png" height=70% width=40%>
+<img src="./docs/images/cicd/confirm_oauth_codebuild_to_github.png" height=30% width=70%>
 
 ## Confirm CodeBuild OAuth to GitHub
 
@@ -249,13 +249,13 @@ In the GitHub console, we can confirm CodeBuild has access to the GitHub account
 
 1. Navigate to Developer Settings > Applications > Authorized OAuth Apps
 
-<img src="./docs/images/webhook/confirm_auth_github_console.png" height=60% width=80%>
+<img src="./docs/images/cicd/confirm_auth_github_console.png" height=60% width=80%>
 
 ### AWS-CLI
 
 `aws codebuild list-source-credentials --region us-east-1`
 
-<img src="./docs/images/webhook/confirm_auth_aws_cli.png" height=40% width=60%>
+<img src="./docs/images/cicd/confirm_auth_aws_cli.png" height=40% width=60%>
 
 # References
 
