@@ -1,0 +1,22 @@
+version: 0.2
+env:
+  secrets-manager:
+    TF_VAR_EXTERNAL_ID: "CodeBuild.AwsHarisSandbox.TerraformManagement:external_id"
+    TF_VAR_ROLE_ARN: "CodeBuild.AwsHarisSandbox.TerraformManagement:role_arn"
+phases:
+  pre_build:
+    commands:
+      - sudo yum install -y yum-utils
+      - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+      - sudo yum -y install "terraform-$TF_VERSION"
+  build:
+    commands:
+      - terraform init
+      - terraform plan -no-color -input=false -refresh=false -out=plan.out
+  post_build:
+    commands:
+      - rm -rf .git
+      - rm -rf .terraform/plugins
+artifacts:
+  files:
+    - '**/*'
