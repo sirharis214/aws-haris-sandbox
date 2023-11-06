@@ -105,8 +105,6 @@ resource "aws_ssoadmin_customer_managed_policy_attachment" "power_user_access" {
 
 # CI/CD
 
-![overview](/docs/images/cicd/aws-haris-sandbox-cicd.drawio.png)
-
 * [Code source](#code-source)
 * [Code artifacts](#code-artifacts)
 * [Infrastructure](#infrastructure)
@@ -114,6 +112,8 @@ resource "aws_ssoadmin_customer_managed_policy_attachment" "power_user_access" {
 * [Config provider for cicd repo & modules]()
 
 We are currently using AWS CodeBuild Projects for our CI/CD.
+
+![overview](/docs/images/cicd/aws-haris-sandbox-cicd.drawio.png)
 
 # Disclaimer :warning:
 
