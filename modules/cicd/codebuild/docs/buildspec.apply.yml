@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - sudo yum install -y yum-utils
+      - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+      - sudo yum -y install "terraform-$TF_VERSION"
+      - echo "checking provider executable"
+      - ls -l .terraform/providers/registry.terraform.io/hashicorp/aws/5.14.0/linux_amd64
+      - if [ "$(stat -c %a .terraform/providers/registry.terraform.io/hashicorp/aws/5.14.0/linux_amd64/terraform-provider-aws_v5.14.0_x5)" != "755" ]; then chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.14.0/linux_amd64/*; fi 
+  build:
+    commands:
+      - terraform init
+      - terraform apply -auto-approve -no-color -input=false plan.out
+  post_build:
+    commands:
+      - rm -rf .git
+      - rm -rf .terraform/plugins
+artifacts:
+  files:
+    - '**/*'
