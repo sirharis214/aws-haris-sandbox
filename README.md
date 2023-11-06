@@ -111,6 +111,7 @@ resource "aws_ssoadmin_customer_managed_policy_attachment" "power_user_access" {
 * [Code artifacts](#code-artifacts)
 * [Infrastructure](#infrastructure)
 * [Webhook](#webhook)
+* [Config provider for cicd repo & modules]()
 
 We are currently using AWS CodeBuild Projects for our CI/CD.
 
@@ -256,6 +257,66 @@ In the GitHub console, we can confirm CodeBuild has access to the GitHub account
 `aws codebuild list-source-credentials --region us-east-1`
 
 <img src="./docs/images/cicd/confirm_auth_aws_cli.png" height=40% width=60%>
+
+## CICD Usage
+### Configure Terraform & AWS provider for CICD repo
+
+The GitHub repository [aws-haris-sandbox-cicd](https://github.com/sirharis214/aws-haris-sandbox-cicd) is linked to the CodeBuild Plan project via a webhook. Any merge to the `dev` branch will automatically trigger the CodeBuild Plan project. We will create various other GitHub repo's which will be terraform modules that create resources in AWS. In the CICD repo we will call those other GitHub repo's to create instances of those modules, to create resources in our aws account via ci/cd. More on this in the cicd repo's documentation [here](https://github.com/sirharis214/aws-haris-sandbox-cicd#introduction). The terraform configurations for those modules is shown in the section below.
+
+The following is the terraform and aws provider configuration that you should follow in the repo:
+
+aws-haris-sandbox-cicd's **main.tf** content:
+```hcl
+terraform {
+  # Terraform core should be pinned to a minor version
+  required_version = "= 1.5.6"
+  required_providers {
+    # Providers should be pinned to a major version
+    # The provider source should always be specified
+    aws = {
+      source  = "hashicorp/aws"
+      version = "= 5.14.0"
+    }
+  }
+  backend "s3" {
+    region = "us-east-1"
+    bucket = "aws-haris-sandbox20230828153749772900000001"
+    key    = "terraform/aws-haris-sandbox-cicd/terraform.tfstate"
+  }
+}
+
+provider "aws" {
+  # Update with your desired region
+  region = "us-east-1"
+  assume_role {
+    role_arn     = var.ROLE_ARN
+    external_id  = var.EXTERNAL_ID
+    session_name = "aws-haris-sandbox-cicd-dev" # repo-branch ; module-workspace
+  }
+}
+```
+
+### Configure Terraform for modules
+
+In the CICD repo mentioned above, we will call various other github repo which are terraform modules. The following is the terraform configuration you should follow for those modules. See [secure-s3-bucket](https://github.com/sirharis214/secure-s3-bucket) as an example.
+
+The provider config will come from the cicd repo itself but you still need to provide the providers source and version that your module uses. 
+
+Module's **versions.tf** content:
+```hcl
+terraform {
+  # Terraform core should be pinned to a minor version
+  required_version = "= 1.5.6"
+  required_providers {
+    # Providers should be pinned to a major version
+    # The provider source should always be specified
+    aws = {
+      source  = "hashicorp/aws"
+      version = "= 5.14.0"
+    }
+  }
+}
+```
 
 # References
 

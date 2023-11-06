@@ -1,3 +1,18 @@
+# v0.1.0
+* pre-req cicd infrastructure created
+    - manually created secret in AWS Secret Manager `CodeBuild.AwsHarisSandbox.TerraformManagement`
+    - manually created a dummy CodeBuild project with GitHub source 
+        - performed the one time manual OAuth to GitHub account and then deleted CodeBuild Project
+* base cicd infrastructure created
+    - artifacts S3 bucket
+    - iam role: `aws-haris-sandbox-cicd-terraform-management`
+    - call to create a instance of codebuild module
+* codebuild module's infra created
+    - codebuild projects for plan and apply
+    - codebuild plan's webhook to cicd GitHub repo
+    - CloudWatch log-groups for codebuild projects
+    - iam role: `cicd-codebuild-xxx`
+
 # v0.0.1
 * start of changelog
 * AWS IAM Identity Center (Successor to AWS Single Sign-On)
