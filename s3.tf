@@ -1,16 +1,19 @@
+/****   Main S3 Bucket   ****/
+
+/* This Bucket will primarly hold a key terraform/ where all module statefiles will be stored.
+Statefile key: terraform/<MODULE_NAME>/terraform.tfstate
+Example, the current module (this repo) is aws-haris-sandbox, so the backend config will look like this:
+
+backend "s3" {
+  region = "us-east-1"
+  bucket = "aws-haris-sandbox20230828153749772900000001"
+  key    = "terraform/aws-haris-sandbox/terraform.tfstate"
+} */
+
 resource "aws_s3_bucket" "this" {
   bucket_prefix = local.module_name
   tags          = local.tags
 }
-
-/*
-resource "aws_s3_bucket_acl" "this" {
-  # This bucket has the bucket owner enforced setting applied for Object Ownership 
-  # When bucket owner enforced is applied, use bucket policies to control access
-  bucket = aws_s3_bucket.this.id
-  acl    = "private"
-}
-*/
 
 resource "aws_s3_bucket_public_access_block" "this" {
   bucket                  = aws_s3_bucket.this.id

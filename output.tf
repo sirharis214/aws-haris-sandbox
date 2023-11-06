@@ -1,3 +1,4 @@
-# output "state_management_policy" {
-#   value = aws_iam_policy.state_management_policy.arn
+# output "external_id" {
+#   value = module.cicd.external_id
+#   sensitive = true
 # }
