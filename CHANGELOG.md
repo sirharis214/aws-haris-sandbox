@@ -1,3 +1,8 @@
+# v0.1.1
+* creating a seperate private route table for private subnet 2
+    - want to create individual NAT gateways for each private subnet 
+    - seperating the route tables will allow us to add routes to their own NAT gateway
+
 # v0.1.0
 * pre-req cicd infrastructure created
     - manually created secret in AWS Secret Manager `CodeBuild.AwsHarisSandbox.TerraformManagement`
