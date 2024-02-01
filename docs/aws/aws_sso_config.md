@@ -21,7 +21,7 @@ New method of configuring AWS SSO + AWS CLI so we can run aws cli commands witho
 <img src="images/17_sso_config.png" height=50% width=50%>
 <img src="images/18_new_aws_config.png" height=50% width=50%>
 
-## heavy_exclamation_mark: Important 
+## :heavy_exclamation_mark: Important
 
 During inital configuration when the web browser asked to auth into AWS, the user chose to login as an admin-user. This set the `sso_role_name` to `AdministratorAccess`, as the above image shows. If you were to do `aws sso logout` and login again via `aws sso login` and this time auth into AWS as a power-user, the `sso_role_name` value would have to manually be updated to the new role being assumed (`PowerUserAccess`). 
 
@@ -50,3 +50,5 @@ There are 2 methods of updating the the `sso_role_name`.
 * Under **Users and Groups** > The permission set names are the value options for `sso_role_name`
 
 <img src="images/20_permission_set_names.png" height=50% width=50%>
+
+> See [this](https://docs.aws.amazon.com/cli/latest/userguide/sso-configure-profile-token.html) doc for more info on AWS SSO and AWS Identity Provider with AWS CLI

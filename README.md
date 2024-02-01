@@ -1,4 +1,21 @@
-# aws-haris-sandbox
+![Header](./docs/images/github-header-image.png)
+
+![Static Badge](https://img.shields.io/badge/terraform-v1.5.6-blue) ![Static Badge](https://img.shields.io/badge/provider__hashicorp%2Faws-v5.14.0-gold) ![Static Badge](https://img.shields.io/badge/aws--cli-v2.13-orange) ![Static Badge](https://img.shields.io/badge/python-v3.9-red) 
+
+# Index
+* [GitHub](./docs/github/)
+  - How to download and config git
+  - Repo's branching explination
+  - Repo's merge-flow explination
+  - Release version convention
+* [Terraform](./docs/terraform/)
+  - How to download terraform
+* [AWS](./docs/aws/)
+  - How to install and configure aws-cli-v2
+  - How to configure aws sso to authenticate aws-cli to your AWS account
+  - How to create IAM Identity Center Groups and Users from console
+  - aws sso authentication helper script
+* [Tools](./docs/tools/)
 
 # IAM Identity Center
 We are utilizing [AWS IAM Identity Center](https://aws.amazon.com/iam/identity-center/) to manage access to our AWS account.
@@ -19,11 +36,11 @@ Using the provided URL, https://d-906780a037.awsapps.com/start Once the user's r
 
 ## IAM Identity Center Setup
 
-For an indept tutorial on how to create AWS IAM Identity Center resources, see [iam_identity_center.md](docs/iam_identity_center.md)
+For an indept tutorial on how to create AWS IAM Identity Center resources, see [iam_identity_center.md](./docs/aws/iam_identity_center.md)
 
 ## AWS CLI Auth
 
-To authenticate aws cli for AWS IAM Identity Center user's we will be using `aws sso`. This will auth us into AWS for aws cli use and terraform use. See [aws_sso_config.md](docs/aws_sso_config.md) for configuration process.
+To authenticate aws cli for AWS IAM Identity Center user's we will be using `aws sso`. This will auth us into AWS for aws cli use and terraform use. See [aws_sso_config.md](./docs/aws/aws_sso_config.md) for configuration process.
 
 * Authenticate (configuration steps have already been followed)
     - `aws sso login`
@@ -31,7 +48,7 @@ To authenticate aws cli for AWS IAM Identity Center user's we will be using `aws
     - Update `.aws/config`'s `sso_role_name` value under `[default]` with the name of the permission set
         - name of the permission set depends on the group the user belongs to
 
-> Utilize the script [aws_sso_login.sh](docs/aws_sso_login.sh) which updates the sso_role_name and opens your web browser to auth into AWS.
+> Utilize the script [aws_sso_login.sh](./docs/aws/aws_sso_login.sh) which updates the sso_role_name and opens your web browser to auth into AWS.
 
 * Log out
     - `aws sso logout`
