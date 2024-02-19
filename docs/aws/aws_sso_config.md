@@ -18,8 +18,8 @@ New method of configuring AWS SSO + AWS CLI so we can run aws cli commands witho
     - `aws s3 ls`
     - run terraform without declaring provider profile
 
-<img src="images/17_sso_config.png" height=50% width=50%>
-<img src="images/18_new_aws_config.png" height=50% width=50%>
+<img src="../images/17_sso_config.png" height=50% width=50%>
+<img src="../images/18_new_aws_config.png" height=50% width=50%>
 
 ## :heavy_exclamation_mark: Important
 
@@ -39,7 +39,7 @@ There are 2 methods of updating the the `sso_role_name`.
     - update the option values as needed for your usecase
 2. Create 2 `[default]` blocks where the `sso_role_name` values vary. Comment and uncomment the block's depending on which user your logged in as at that time
 
-<img src="images/19_two_defaults.png" height=50% width=50%>
+<img src="../images/19_two_defaults.png" height=50% width=50%>
 
 ### Get SSO Role Name Values
 
@@ -49,6 +49,6 @@ There are 2 methods of updating the the `sso_role_name`.
 * Select the AWS account this login is for 
 * Under **Users and Groups** > The permission set names are the value options for `sso_role_name`
 
-<img src="images/20_permission_set_names.png" height=50% width=50%>
+<img src="../images/20_permission_set_names.png" height=50% width=50%>
 
 > See [this](https://docs.aws.amazon.com/cli/latest/userguide/sso-configure-profile-token.html) doc for more info on AWS SSO and AWS Identity Provider with AWS CLI
